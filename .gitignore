@@ -1,0 +1,99 @@
+# OS
+.DS_Store
+
+# Build output
+dist/
+.next
+.nuxt
+.astro
+.vuepress/dist
+
+# Keys
+.authorized_keys/
+.auth/
+.keys/
+.ssh/
+*.pem
+*.key
+*.crt
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Test coverage
+coverage
+lib-cov
+*.lcov
+.nyc_output
+
+# Dependencies
+node_modules/
+jspm_packages/
+
+# Package managers
+.node_repl_history
+.yarn-integrity
+.npm
+.pnp.*
+*.tgz
+
+# TypeScript
+typings/
+
+# Caches
+.eslintcache
+.cache
+
+# dotenv environment variables file
+.env.*
+.env
+
+# ide
+.editorconfig
+.claude
+.cursor
+.vscode
+.idea
+*.swp
+
+# Service worker
+sw.*
+
+# Components
+bower_components
+storybook-static
+.nuxt-storybook
+
+# Custom packages
+packages/be/cache
+packages/be/public
+packages/be/tmp
+packages/fe/static/datasets
+
+# Other tooling
+.serverless
+cypress/*
+playwright-report/
+playwright-trace/
+test-results/
+.playwright/
+.puppeteer/
+.selenium/
+.cypress/
+.vercel/
+.percy/
+.wdio/
+.cy/
+.grunt
