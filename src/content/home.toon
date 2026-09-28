@@ -1,14 +1,57 @@
 meta:
   title: null
-  description: A fast, accessible static site template built with Astro and Alpine.js.
+  description: Conceptualize what a home purchase really costs each month from factors like price, interest, down payment, rate, term and property tax.
   og_image: /og-default.png
 
 options: null
 
 content:
-  heading: Site Name
-  tagline: A minimal, opinionated starting point.
-  cta_primary: Get started
-  cta_primary_href: "#"
-  cta_secondary: Learn more
-  cta_secondary_href: "#"
+  rail: Mortgage Calculator
+  kicker: Home buying costs demystified
+  heading: What will this house cost you each month?
+  subheading: Set the price. The figures follow.
+  intro: "Price, down payment, rate, term and property tax on the left; monthly cost and a breakdown of the whole on the right. Every figure is an estimate."
+  illustration_alt: Elevation drawing of a house
+  figures_rail: Figures
+  labels:
+    price: Home price
+    down: Down payment
+    rate: Rate
+    term: Term (years)
+    tax: Property tax
+    insured: Insured
+    currency: Currency
+    theme: Theme
+  results:
+    monthly: Monthly payment
+    total: Total over {years} years
+    with_tax: with property tax
+    without_tax: Property tax excluded
+    biweekly: bi-weekly
+    in_base: in {currency}
+  segments:
+    principal: Principal
+    interest: Interest
+    down: Down payment
+    tax: Property tax
+    insurance: Insurance
+  disclaimer: "Estimates only. Converted at {fx}. Property tax is an annual share of price, shown monthly."
+  settings:
+    currency: CAD
+    currencies[2]: CAD,USD
+    fx_rate: 0.73
+    locale: en-CA
+    terms[3]: 20,25,30
+    defaults:
+      price: 750000
+      down_pct: 20
+      rate: 4.5
+      years: 25
+      tax_pct: 1
+      tax_on: true
+      theme: newsprint
+    ranges:
+      price[3]: 100000,2000000,5000
+      down_pct[3]: 5,50,1
+      rate[3]: 2,9,0.05
+      tax_pct[3]: 0.25,2.5,0.05

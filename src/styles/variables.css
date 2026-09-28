@@ -2,18 +2,18 @@
    /* -------------------------------------------------------------------------
      Colors
   -------------------------------------------------------------------------- */
-   --woodsmoke: #0d0e12;
-   --tuna: #323340;
-
+   --cod-gray: #151515;
+   --cararra: #edebe6;
+   --gallery: #f9f9f7;
+   --merino: #f2ebdc;
    --bone: #e2d8ca;
-   --sandstone: #7a7268;
-   --merlin: #3e3c38;
-
-   --tan: #c9a97a;
-   --buff: #dab98a;
-   --tobacco: #7a6548;
-
    --cinnabar: #d96060;
+   
+   --ink: var(--cod-gray);
+   --muted: var(--chicago);
+   --paper: var(--westar);
+   --rule: 0.0625rem;
+   --rule-heavy: 0.09375rem;
 
    /* -------------------------------------------------------------------------
      Typography

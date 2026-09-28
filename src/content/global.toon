@@ -1,6 +1,6 @@
 name: Mortgage Calc
-tagline: Static site starter optimized for compatibility and performance.
-description: A fast, accessible static site template built with Astro and Alpine.js.
-url: https://example.com
+tagline: Home buying costs demystified
+description: Conceptualize what a home purchase really costs each month from factors like price, interest, down payment, rate, term and property tax.
+url: https://mortgage-calc.pages.dev
 title_postfix: " — Mortgage Calc"
 og_image: /og-default.png
