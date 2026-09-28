@@ -6,12 +6,13 @@
    --cararra: #edebe6;
    --gallery: #f9f9f7;
    --merino: #f2ebdc;
+   --chicago: #5e5b56;
    --bone: #e2d8ca;
    --cinnabar: #d96060;
-   
+
    --ink: var(--cod-gray);
    --muted: var(--chicago);
-   --paper: var(--westar);
+   --paper: var(--cararra);
    --rule: 0.0625rem;
    --rule-heavy: 0.09375rem;
 

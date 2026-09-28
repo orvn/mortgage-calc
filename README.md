@@ -45,8 +45,6 @@ bun preview    # preview the ./dist build locally
 │   ├── content/
 │   │   ├── global.toon   # Site-wide values (name, URL, description, title postfix)
 │   │   ├── home.toon
-│   │   ├── about.toon
-│   │   ├── privacy.toon
 │   │   └── 404.toon
 │   │
 │   ├── layouts/
@@ -57,8 +55,6 @@ bun preview    # preview the ./dist build locally
 │   │
 │   ├── pages/
 │   │   ├── index.astro
-│   │   ├── about.astro
-│   │   ├── privacy.astro
 │   │   └── 404.astro
 │   │
 │   └── styles/
@@ -179,12 +175,11 @@ The `title` prop renders as `Page Title - Site Name` in `<title>`. Omit it on th
 
 ### Nav links
 
-Add entries to the `navLinks` array in `src/components/Nav.astro`:
+`Nav.astro` is not mounted right now. To bring it back, import it in `Header.astro` and add entries to its `navLinks` array:
 
 ```ts
 const navLinks = [
   { label: 'Home',    href: '/'       },
-  { label: 'About',   href: '/about'  },
   { label: 'Blog',    href: '/blog'   },
 ];
 ```

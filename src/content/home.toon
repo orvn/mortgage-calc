@@ -21,7 +21,6 @@ content:
     tax: Property tax
     insured: Insured
     currency: Currency
-    theme: Theme
   results:
     monthly: Monthly payment
     total: Total over {years} years
@@ -43,13 +42,12 @@ content:
     locale: en-CA
     terms[3]: 20,25,30
     defaults:
-      price: 750000
+      price: 1000000
       down_pct: 20
       rate: 4.5
       years: 25
       tax_pct: 1
       tax_on: true
-      theme: newsprint
     ranges:
       price[3]: 100000,2000000,5000
       down_pct[3]: 5,50,1
