@@ -15,7 +15,7 @@ export default defineConfig({
 
   // Security headers for the development server
   server: {
-    port: 14220,
+    port: 14410,
   },
 
   vite: {
