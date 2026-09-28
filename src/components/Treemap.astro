@@ -1,0 +1,107 @@
+---
+// Squarified treemap of the cost breakdown, driven by `cells` on the
+// enclosing mortgageCalc Alpine component
+---
+
+<div class="treemap" role="list">
+  <template x-for="c in cells" :key="c.key">
+    <div
+      class="tile"
+      role="listitem"
+      :class="[`tile-${c.key}`, c.size]"
+      :style="`left:${c.x};top:${c.y};width:${c.w};height:${c.h}`"
+      :title="`${c.name} ${c.value}`"
+    >
+      <div class="tile-name" x-text="c.name"></div>
+      <div class="tile-figure">
+        <span class="tile-value" x-text="c.value"></span>
+        <span class="tile-pct" x-text="c.pct"></span>
+      </div>
+    </div>
+  </template>
+</div>
+
+<style>
+  .treemap {
+    position: relative;
+    flex: 1;
+    min-height: 17.5rem;
+  }
+
+  .tile {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.25rem;
+    min-width: 0;
+    padding: 0.625rem 0.75rem;
+    overflow: hidden;
+    color: var(--ink);
+    box-shadow: inset calc(-1 * var(--rule)) calc(-1 * var(--rule)) 0 var(--ink);
+    transition: left 350ms, top 350ms, width 350ms, height 350ms;
+  }
+
+  .tile-name {
+    max-width: 100%;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .tile-figure {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+    max-width: 100%;
+  }
+
+  .tile-value {
+    min-width: 0;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .is-small .tile-value { font-size: 0.875rem; }
+  .is-large .tile-value { font-size: 1.5rem; }
+
+  .tile-pct {
+    font-size: 0.75rem;
+  }
+
+  /* Fill patterns, px on purpose since these are pixel textures */
+  .tile-principal {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .tile-interest {
+    background: radial-gradient(var(--ink) 1.3px, var(--paper) 1.6px) 0 0 / 5px 5px;
+  }
+
+  .tile-down {
+    background: repeating-linear-gradient(0deg, var(--ink) 0 1px, var(--paper) 1px 7px);
+  }
+
+  .tile-tax {
+    background: radial-gradient(var(--ink) 0.8px, var(--paper) 1.1px) 0 0 / 9px 9px;
+  }
+
+  .tile-insurance {
+    background: var(--paper);
+  }
+
+  /* Patterned tiles set their text on a paper chip for legibility */
+  .tile-interest .tile-name,
+  .tile-interest .tile-figure,
+  .tile-down .tile-name,
+  .tile-down .tile-figure,
+  .tile-tax .tile-name,
+  .tile-tax .tile-figure {
+    background: var(--paper);
+    padding: 0.0625rem 0.25rem;
+  }
+</style>

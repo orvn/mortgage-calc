@@ -63,7 +63,9 @@ const canonicalURL = Astro.site
     <!-- Skip-to-content — first focusable element, visible on keyboard focus -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <Header />
+    <Header>
+      <slot name="header-actions" slot="actions" />
+    </Header>
 
     <main id="main-content" tabindex="-1">
       <slot />

@@ -1,0 +1,78 @@
+---
+interface Props {
+  alt: string;
+}
+
+const { alt } = Astro.props;
+---
+
+<svg
+  class="house"
+  viewBox="10 20 280 366"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="square"
+  stroke-linejoin="miter"
+  role="img"
+  aria-label={alt}
+>
+  <defs>
+    <pattern id="glass" width="4" height="4" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r=".7" fill="currentColor" stroke="none"></circle>
+    </pattern>
+  </defs>
+  <polygon points="36,160 150,28 264,160 246,152 150,42 54,152" fill="currentColor"></polygon>
+  <line x1="36" y1="160" x2="50" y2="160"></line>
+  <line x1="250" y1="160" x2="264" y2="160"></line>
+  <line x1="150" y1="42" x2="150" y2="62"></line>
+  <line x1="136" y1="58" x2="164" y2="58"></line>
+  <polyline points="206,93 206,58 222,58 222,111"></polyline>
+  <rect x="203" y="53" width="22" height="5" fill="currentColor"></rect>
+  <path d="M134 126 V94 a16 16 0 0 1 32 0 V126 Z" fill="url(#glass)"></path>
+  <line x1="150" y1="78" x2="150" y2="126"></line>
+  <line x1="130" y1="130" x2="170" y2="130"></line>
+  <line x1="50" y1="160" x2="50" y2="368"></line>
+  <line x1="250" y1="160" x2="250" y2="368"></line>
+  <polygon points="58,180 76,166 132,166 150,180" fill="currentColor"></polygon>
+  <line x1="62" y1="180" x2="62" y2="368"></line>
+  <line x1="76" y1="180" x2="76" y2="368"></line>
+  <line x1="132" y1="180" x2="132" y2="368"></line>
+  <line x1="146" y1="180" x2="146" y2="368"></line>
+  <rect x="84" y="192" width="40" height="62" fill="url(#glass)"></rect>
+  <line x1="84" y1="216" x2="124" y2="216"></line>
+  <rect x="66" y="196" width="6" height="54" fill="url(#glass)"></rect>
+  <rect x="136" y="196" width="6" height="54" fill="url(#glass)"></rect>
+  <line x1="80" y1="258" x2="128" y2="258"></line>
+  <line x1="58" y1="268" x2="150" y2="268"></line>
+  <line x1="58" y1="276" x2="150" y2="276"></line>
+  <rect x="84" y="288" width="40" height="66" fill="url(#glass)"></rect>
+  <line x1="84" y1="312" x2="124" y2="312"></line>
+  <rect x="66" y="292" width="6" height="58" fill="url(#glass)"></rect>
+  <rect x="136" y="292" width="6" height="58" fill="url(#glass)"></rect>
+  <line x1="80" y1="358" x2="128" y2="358"></line>
+  <line x1="178" y1="190" x2="222" y2="190"></line>
+  <rect x="182" y="194" width="36" height="60" fill="url(#glass)"></rect>
+  <line x1="182" y1="218" x2="218" y2="218"></line>
+  <line x1="178" y1="258" x2="222" y2="258"></line>
+  <polygon points="156,290 200,266 244,290" fill="currentColor"></polygon>
+  <line x1="164" y1="290" x2="164" y2="356"></line>
+  <line x1="236" y1="290" x2="236" y2="356"></line>
+  <rect x="186" y="300" width="28" height="9" fill="url(#glass)"></rect>
+  <rect x="186" y="309" width="28" height="47" fill="currentColor"></rect>
+  <line x1="158" y1="356" x2="242" y2="356"></line>
+  <rect x="180" y="356" width="40" height="8"></rect>
+  <rect x="174" y="364" width="52" height="8"></rect>
+  <rect x="46" y="368" width="128" height="12"></rect>
+  <rect x="226" y="368" width="28" height="12"></rect>
+  <rect x="168" y="372" width="64" height="8"></rect>
+  <line x1="16" y1="380" x2="284" y2="380"></line>
+</svg>
+
+<style>
+  .house {
+    width: 100%;
+    max-width: 21.25rem;
+    color: var(--ink);
+  }
+</style>

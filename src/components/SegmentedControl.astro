@@ -1,0 +1,61 @@
+---
+// Radio-style button group bound to an Alpine expression via `model`
+interface Props {
+  options: { value: string | number; label: string }[];
+  model: string;
+  label: string;
+  variant?: 'compact' | 'wide';
+}
+
+const { options, model, label, variant = 'compact' } = Astro.props;
+---
+
+<div class:list={['segmented', `segmented-${variant}`]} role="radiogroup" aria-label={label}>
+  {options.map((o) => {
+    const v = JSON.stringify(o.value);
+    return (
+      <button
+        type="button"
+        role="radio"
+        :aria-checked={`String(${model} === ${v})`}
+        :class={`{ 'is-on': ${model} === ${v} }`}
+        @click={`${model} = ${v}`}
+      >{o.label}</button>
+    );
+  })}
+</div>
+
+<style>
+  .segmented {
+    display: flex;
+    border: var(--rule) solid var(--ink);
+    font-weight: 500;
+  }
+
+  .segmented button {
+    font: inherit;
+    font-size: 0.8125rem;
+    padding: 0.375rem 0.75rem;
+    background: transparent;
+    color: var(--ink);
+    border: 0;
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+
+  .segmented button.is-on {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .segmented-wide button {
+    flex: 1;
+    font-size: 0.9375rem;
+    padding: 0.375rem 0;
+    text-align: center;
+  }
+
+  .segmented-wide button + button {
+    border-left: var(--rule) solid var(--ink);
+  }
+</style>

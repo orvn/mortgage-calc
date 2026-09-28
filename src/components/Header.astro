@@ -6,34 +6,31 @@ const { name } = loadGlobal();
 
 <header class="site-header" role="banner">
   <div class="container header-inner">
-    <a href="/" class="site-logo" aria-label={`${name} — go to homepage`}>
+    <a href="/" class="site-logo" aria-label={`${name}, go to homepage`}>
       {name}
     </a>
+    <div class="header-actions">
+      <slot name="actions" />
+    </div>
   </div>
 </header>
 
 <style>
   .site-header {
-    position: sticky;
-    top: 0;
-    height: var(--header-height);
-    background-color: rgb(237 235 230 / 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--ink);
-    z-index: var(--z-header);
+    padding-top: 1.75rem;
   }
 
   .header-inner {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
-    height: 100%;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
   .site-logo {
     font-weight: 700;
-    font-size: var(--text-lg);
+    font-size: 1.25rem;
     color: var(--ink);
     text-decoration: none;
     letter-spacing: -0.02em;
@@ -41,6 +38,12 @@ const { name } = loadGlobal();
   }
 
   .site-logo:hover {
-    color: var(--ink);
+    color: var(--muted);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
   }
 </style>

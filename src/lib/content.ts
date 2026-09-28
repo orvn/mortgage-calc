@@ -27,6 +27,36 @@ export interface PageContent<C = Record<string, unknown>> {
   content: C;
 }
 
+export interface CalculatorContent {
+  rail: string;
+  kicker: string;
+  heading: string;
+  subheading: string;
+  intro: string;
+  illustration_alt: string;
+  figures_rail: string;
+  labels: Record<'price' | 'down' | 'rate' | 'term' | 'tax' | 'insured' | 'currency', string>;
+  results: Record<'monthly' | 'total' | 'with_tax' | 'without_tax' | 'biweekly' | 'in_base', string>;
+  segments: Record<'principal' | 'interest' | 'down' | 'tax' | 'insurance', string>;
+  disclaimer: string;
+  settings: {
+    currency: string;
+    currencies: string[];
+    fx_rate: number;
+    locale: string;
+    terms: number[];
+    defaults: {
+      price: number;
+      down_pct: number;
+      rate: number;
+      years: number;
+      tax_pct: number;
+      tax_on: boolean;
+    };
+    ranges: Record<'price' | 'down_pct' | 'rate' | 'tax_pct', number[]>;
+  };
+}
+
 function readToon(filename: string): string {
   return readFileSync(join(process.cwd(), 'src/content', filename), 'utf-8');
 }

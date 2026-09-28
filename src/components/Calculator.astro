@@ -1,0 +1,331 @@
+---
+import Rail from './Rail.astro';
+import HouseIllustration from './HouseIllustration.astro';
+import RangeField from './RangeField.astro';
+import SegmentedControl from './SegmentedControl.astro';
+import Toggle from './Toggle.astro';
+import Treemap from './Treemap.astro';
+import type { CalculatorContent } from '../lib/content';
+
+interface Props {
+  content: CalculatorContent;
+}
+
+const { content: c } = Astro.props;
+const { labels: l, results, settings: s } = c;
+const r = s.ranges;
+
+const cfg = {
+  currency: s.currency,
+  currencies: s.currencies,
+  fxRate: s.fx_rate,
+  locale: s.locale,
+  defaults: {
+    price: s.defaults.price,
+    downPct: s.defaults.down_pct,
+    rate: s.defaults.rate,
+    years: s.defaults.years,
+    taxPct: s.defaults.tax_pct,
+    taxOn: s.defaults.tax_on,
+  },
+  ranges: { price: r.price, downPct: r.down_pct, rate: r.rate, taxPct: r.tax_pct },
+  segments: c.segments,
+  results,
+  disclaimer: c.disclaimer,
+};
+
+const compact = (n: number) =>
+  '$' + new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 }).format(n);
+const priceTicks = [compact(r.price[0]), compact(r.price[1])];
+const terms = s.terms.map((y) => ({ value: y, label: String(y) }));
+---
+
+<div class="calculator" x-data={`mortgageCalc(${JSON.stringify(cfg)})`}>
+
+  <section class="panel hero">
+    <Rail>{c.rail}</Rail>
+    <div class="panel-body grid-x">
+      <div class="cell large-7 hero-copy">
+        <p class="hero-kicker">{c.kicker}</p>
+        <h1>{c.heading}</h1>
+        <p class="hero-sub">{c.subheading}</p>
+        <div class="hero-intro">
+          <p>{c.intro}</p>
+        </div>
+      </div>
+      <div class="cell large-5 hero-art">
+        <HouseIllustration alt={c.illustration_alt} />
+      </div>
+    </div>
+  </section>
+
+  <section class="panel figures">
+    <Rail>{c.figures_rail} · <span x-text="currency">{s.currency}</span></Rail>
+    <div class="panel-body grid-x">
+
+      <div class="cell large-6 inputs">
+        <RangeField id="price" label={l.price} model="price" range={r.price} value="priceLabel" size="lg" ticks={priceTicks} />
+
+        <RangeField id="down" label={l.down} model="downPct" range={r.down_pct} value="downLabel">
+          <span slot="badge" class="badge" x-show="insurance > 0" x-cloak>{l.insured}</span>
+        </RangeField>
+
+        <div class="inputs-row">
+          <RangeField id="rate" label={l.rate} model="rate" range={r.rate} value="rateLabel" />
+          <div class="term-field">
+            <span class="term-label" aria-hidden="true">{l.term}</span>
+            <SegmentedControl options={terms} model="years" label={l.term} variant="wide" />
+          </div>
+        </div>
+
+        <div class="tax-field">
+          <RangeField id="tax" label={l.tax} model="taxPct" range={r.tax_pct} value="taxLabel" off="!taxOn">
+            <Toggle slot="before" model="taxOn" label={`Include ${l.tax.toLowerCase()}`} />
+          </RangeField>
+        </div>
+      </div>
+
+      <div class="cell large-6 results">
+        <div class="results-hero">
+          <div class="results-label">{results.monthly} · <span x-text="currency">{s.currency}</span></div>
+          <div class="results-monthly" x-text="fmt(monthly)"></div>
+          <div class="results-note" x-text="taxNote"></div>
+          <div class="results-fx" x-text="fxNote"></div>
+        </div>
+        <div class="results-total">
+          <div class="results-label" x-text="totalLabel"></div>
+          <div class="results-total-value" x-text="fmt(total)"></div>
+        </div>
+        <Treemap />
+      </div>
+
+    </div>
+  </section>
+
+  <p class="disclaimer" x-text="disclaimer"></p>
+
+</div>
+
+<style lang="scss">
+  @use '../styles/breakpoints' as *;
+
+  .calculator {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .panel {
+    display: flex;
+    border: var(--rule-heavy) solid var(--ink);
+  }
+
+  .panel-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* ---- Hero ------------------------------------------------------------ */
+
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    border-right: var(--rule-heavy) solid var(--ink);
+  }
+
+  .hero-kicker {
+    padding: 1rem 1.75rem;
+    border-bottom: var(--rule) solid var(--ink);
+    font-size: 1.125rem;
+  }
+
+  .hero h1 {
+    margin: 0;
+    padding: 1.375rem 1.75rem;
+    border-bottom: var(--rule) solid var(--ink);
+    font-size: clamp(2.125rem, 4vw, 3.125rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .hero-sub {
+    padding: 0.875rem 1.75rem;
+    border-bottom: var(--rule) solid var(--ink);
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .hero-intro {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    min-height: 5rem;
+    padding: 1.25rem 1.75rem;
+  }
+
+  .hero-intro p {
+    max-width: 25rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .hero-art {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1.75rem 1.25rem 0.75rem;
+  }
+
+  /* ---- Inputs ---------------------------------------------------------- */
+
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.875rem;
+    padding: 1.875rem 2rem;
+    border-right: var(--rule-heavy) solid var(--ink);
+  }
+
+  .inputs-row {
+    display: flex;
+    gap: 1.75rem;
+  }
+
+  .inputs-row > :first-child {
+    flex: 1;
+  }
+
+  .term-field {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .term-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .tax-field {
+    padding-top: 1.375rem;
+    border-top: var(--rule) dashed var(--ink);
+  }
+
+  .badge {
+    padding: 0.125rem 0.375rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  /* ---- Results --------------------------------------------------------- */
+
+  .results {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .results-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.75rem 2rem;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .results-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+
+  .results-monthly {
+    font-size: clamp(2.75rem, 5.2vw, 4.125rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  .results-note {
+    font-size: 0.875rem;
+    opacity: 0.8;
+  }
+
+  .results-fx {
+    font-size: 0.875rem;
+    opacity: 0.65;
+    min-height: 1.5em;
+  }
+
+  .results-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.875rem 1.25rem;
+    border-bottom: var(--rule) solid var(--ink);
+  }
+
+  .results-total-value {
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .disclaimer {
+    max-width: 38.75rem;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  /* ---- Responsive ------------------------------------------------------ */
+
+  @include xl {
+    .panel {
+      flex-direction: column;
+    }
+
+    .hero-copy,
+    .inputs {
+      border-right: 0;
+    }
+
+    .hero-copy {
+      border-bottom: var(--rule-heavy) solid var(--ink);
+    }
+
+    .inputs {
+      border-bottom: var(--rule-heavy) solid var(--ink);
+    }
+  }
+
+  @include medium {
+    .inputs {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .inputs-row {
+      flex-direction: column;
+      gap: 1.875rem;
+    }
+
+    .results-hero {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .hero-kicker,
+    .hero h1,
+    .hero-sub,
+    .hero-intro {
+      padding-inline: 1.25rem;
+    }
+  }
+</style>

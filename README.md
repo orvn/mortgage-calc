@@ -2,7 +2,7 @@
 
 # Mortgage Calc
 
-A static site template repo built with [Astro](https://astro.build) and [Alpine.js](https://alpinejs.dev). Optimised for minimal Javascript footprint, performance, a11y, and SEO.
+A mortgage calculator built with [Astro](https://astro.build) and [Alpine.js](https://alpinejs.dev). Optimised for minimal Javascript footprint, performance, a11y, and SEO.
 
 ## Stack
 
@@ -37,10 +37,17 @@ bun preview    # preview the ./dist build locally
 │   │   └── images/       # Images processed by Astro's <Image /> component
 │   │
 │   ├── components/
+│   │   ├── Calculator.astro        # Hero + figures panels, owns the mortgageCalc Alpine scope
+│   │   ├── RangeField.astro        # Labelled slider bound to an Alpine property
+│   │   ├── SegmentedControl.astro  # Radio button group (term, currency)
+│   │   ├── Toggle.astro            # Switch (property tax on/off)
+│   │   ├── Treemap.astro           # Squarified cost breakdown
+│   │   ├── Rail.astro              # Vertical label column on a panel
+│   │   ├── HouseIllustration.astro
 │   │   ├── Footer.astro
-│   │   ├── Header.astro
-│   │   ├── Nav.astro
-│   │   └── SEO.astro     # <title>, meta, canonical, OG, Twitter card
+│   │   ├── Header.astro            # Accepts an `actions` slot, passed through BaseLayout as `header-actions`
+│   │   ├── Nav.astro               # Not mounted, see Nav links
+│   │   └── SEO.astro               # <title>, meta, canonical, OG, Twitter card
 │   │
 │   ├── content/
 │   │   ├── global.toon   # Site-wide values (name, URL, description, title postfix)
@@ -49,6 +56,8 @@ bun preview    # preview the ./dist build locally
 │   │
 │   ├── layouts/
 │   │   └── BaseLayout.astro  # Root HTML shell, accepts SEO + JSON-LD props
+│   │
+│   ├── entrypoint.ts     # Alpine registrations: mortgageCalc data component, currency store
 │   │
 │   ├── lib/
 │   │   └── content.ts    # loadGlobal() and loadPage() helpers

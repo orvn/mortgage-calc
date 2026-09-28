@@ -1,0 +1,51 @@
+---
+// Switch bound to a boolean Alpine property named by `model`
+interface Props {
+  model: string;
+  label: string;
+}
+
+const { model, label } = Astro.props;
+---
+
+<button
+  type="button"
+  role="switch"
+  class="toggle"
+  :aria-checked={`String(${model})`}
+  @click={`${model} = !${model}`}
+  aria-label={label}
+>
+  <span class="toggle-knob"></span>
+</button>
+
+<style>
+  .toggle {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    width: 1.875rem;
+    height: 1rem;
+    padding: 0.125rem;
+    border: var(--rule) solid var(--ink);
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+  }
+
+  .toggle-knob {
+    width: 0.625rem;
+    height: 0.625rem;
+    background: var(--ink);
+    transition: transform 150ms ease, background-color 150ms ease;
+  }
+
+  .toggle[aria-checked='true'] {
+    background: var(--ink);
+  }
+
+  .toggle[aria-checked='true'] .toggle-knob {
+    background: var(--paper);
+    transform: translateX(0.875rem);
+  }
+</style>
