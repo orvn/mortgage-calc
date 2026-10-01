@@ -35,9 +35,9 @@ export interface CalculatorContent {
   intro: string;
   illustration_alt: string;
   figures_rail: string;
-  labels: Record<'price' | 'down' | 'rate' | 'term' | 'tax' | 'insured' | 'currency', string>;
+  labels: Record<'price' | 'down' | 'rate' | 'term' | 'tax' | 'insured' | 'currency' | 'region' | 'land_transfer', string>;
   results: Record<'monthly' | 'total' | 'with_tax' | 'without_tax' | 'biweekly' | 'in_base', string>;
-  segments: Record<'principal' | 'interest' | 'down' | 'tax' | 'insurance', string>;
+  segments: Record<'principal' | 'interest' | 'down' | 'tax' | 'insurance' | 'land_transfer', string>;
   disclaimer: string;
   settings: {
     currency: string;
@@ -52,8 +52,12 @@ export interface CalculatorContent {
       years: number;
       tax_pct: number;
       tax_on: boolean;
+      land_transfer_on: boolean;
+      region: string;
     };
     ranges: Record<'price' | 'down_pct' | 'rate' | 'tax_pct', number[]>;
+    regions: Record<string, { name: string; schedules: string[] }>;
+    land_transfer: Record<string, { name: string; brackets: { from: number; rate: number }[] }>;
   };
 }
 

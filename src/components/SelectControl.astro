@@ -1,0 +1,42 @@
+---
+// Native select bound to an Alpine expression via `model`
+interface Props {
+  options: { value: string | number; label: string }[];
+  model: string;
+  label: string;
+}
+
+const { options, model, label } = Astro.props;
+---
+
+<select class="select" x-model={model} aria-label={label}>
+  {options.map((o) => <option value={o.value}>{o.label}</option>)}
+</select>
+
+<style>
+  .select {
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.5;
+    height: auto;
+    margin: 0;
+    padding: 0.375rem 2rem 0.375rem 0.75rem;
+    border: var(--rule) solid var(--ink);
+    border-radius: 0;
+    background-color: transparent;
+    background-origin: border-box;
+    background-size: 0.625rem 0.375rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%23151515' stroke-width='1.5'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .select:hover {
+    background-color: color-mix(in srgb, var(--ink) 6%, transparent);
+  }
+</style>

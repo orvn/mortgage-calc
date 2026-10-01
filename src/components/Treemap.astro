@@ -68,6 +68,12 @@
   .is-small .tile-value { font-size: 0.875rem; }
   .is-large .tile-value { font-size: 1.5rem; }
 
+  /* Too narrow for text, the title attribute still names it on hover */
+  .is-tiny .tile-name,
+  .is-tiny .tile-figure {
+    display: none;
+  }
+
   .tile-pct {
     font-size: 0.75rem;
   }
@@ -94,13 +100,19 @@
     background: var(--paper);
   }
 
+  .tile-land_transfer {
+    background: repeating-linear-gradient(45deg, var(--ink) 0 1px, var(--paper) 1px 6px);
+  }
+
   /* Patterned tiles set their text on a paper chip for legibility */
   .tile-interest .tile-name,
   .tile-interest .tile-figure,
   .tile-down .tile-name,
   .tile-down .tile-figure,
   .tile-tax .tile-name,
-  .tile-tax .tile-figure {
+  .tile-tax .tile-figure,
+  .tile-land_transfer .tile-name,
+  .tile-land_transfer .tile-figure {
     background: var(--paper);
     padding: 0.0625rem 0.25rem;
   }

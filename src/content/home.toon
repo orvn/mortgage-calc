@@ -21,6 +21,8 @@ content:
     tax: Property tax
     insured: Insured
     currency: Currency
+    region: Region
+    land_transfer: Land transfer tax
   results:
     monthly: Monthly payment
     total: Total over {years} years
@@ -34,6 +36,7 @@ content:
     down: Down payment
     tax: Property tax
     insurance: Insurance
+    land_transfer: Land transfer tax
   disclaimer: "Estimates only. Converted at {fx}. Property tax is an annual share of price, shown monthly."
   settings:
     currency: CAD
@@ -42,14 +45,45 @@ content:
     locale: en-CA
     terms[3]: 20,25,30
     defaults:
-      price: 1000000
+      price: 1500000
       down_pct: 20
-      rate: 4.5
+      rate: 4
       years: 25
       tax_pct: 1
       tax_on: true
+      land_transfer_on: true
+      region: toronto
     ranges:
-      price[3]: 100000,2000000,5000
+      price[3]: 100000,4000000,5000
       down_pct[3]: 5,50,1
       rate[3]: 2,9,0.05
       tax_pct[3]: 0.25,2.5,0.05
+    regions:
+      toronto:
+        name: Toronto
+        schedules[2]: ontario,toronto
+      ontario:
+        name: Ontario
+        schedules[1]: ontario
+    land_transfer:
+      ontario:
+        name: Ontario
+        brackets[5]{from,rate}:
+          0,0.5
+          55000,1
+          250000,1.5
+          400000,2
+          2000000,2.5
+      toronto:
+        name: Toronto
+        brackets[10]{from,rate}:
+          0,0.5
+          55000,1
+          250000,1.5
+          400000,2
+          2000000,2.5
+          3000000,4.4
+          4000000,5.45
+          5000000,6.5
+          10000000,7.55
+          20000000,8.6

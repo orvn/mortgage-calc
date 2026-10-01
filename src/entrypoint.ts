@@ -41,8 +41,20 @@ function squarify(vals: number[], W: number, H: number) {
   return out.map(r => ({ x: r.x / W, y: r.y / H, w: r.w / W, h: r.h / H }));
 }
 
+// Marginal tax: each bracket's rate applies only to the slice of price above its `from`
+function marginalTax(price: number, brackets: { from: number; rate: number }[]) {
+  let tax = 0;
+  for (let i = 0; i < brackets.length; i++) {
+    const from = brackets[i].from, to = brackets[i + 1]?.from ?? Infinity;
+    if (price <= from) break;
+    tax += (Math.min(price, to) - from) * brackets[i].rate / 100;
+  }
+  return tax;
+}
+
 export default (Alpine: Alpine) => {
   Alpine.store('currency', { code: null as string | null });
+  Alpine.store('region', { key: null as string | null });
 
   Alpine.data('mortgageCalc', (cfg: any) => ({
     price: cfg.defaults.price,
@@ -51,9 +63,13 @@ export default (Alpine: Alpine) => {
     years: cfg.defaults.years,
     taxPct: cfg.defaults.taxPct,
     taxOn: cfg.defaults.taxOn,
+    landTransferOn: cfg.defaults.landTransferOn,
 
     get currency(): string {
       return (this as any).$store.currency.code ?? cfg.currency;
+    },
+    get region(): string {
+      return (this as any).$store.region.key ?? cfg.defaults.region;
     },
     get down() { return this.price * this.downPct / 100; },
     get base() { return this.price - this.down; },
@@ -71,6 +87,16 @@ export default (Alpine: Alpine) => {
     get interest() { return this.monthly * this.months - this.principal; },
     get tax() { return this.taxOn ? this.price * this.taxPct / 100 / 12 : 0; },
     get biweekly() { return this.monthly * 12 / 26; },
+    get regionName() { return cfg.regions[this.region].name; },
+    get landTransferParts() {
+      return cfg.regions[this.region].schedules.map((k: string) => ({
+        name: cfg.landTransfer[k].name,
+        v: marginalTax(this.price, cfg.landTransfer[k].brackets),
+      }));
+    },
+    get landTransfer() {
+      return this.landTransferOn ? this.landTransferParts.reduce((m: number, p: any) => m + p.v, 0) : 0;
+    },
 
     get items() {
       const s = cfg.segments;
@@ -80,6 +106,7 @@ export default (Alpine: Alpine) => {
         { key: 'down', name: s.down, v: this.down },
         { key: 'tax', name: s.tax, v: this.tax * this.months },
         { key: 'insurance', name: s.insurance, v: this.insurance },
+        { key: 'land_transfer', name: s.land_transfer, v: this.landTransfer },
       ].filter(i => i.v > 0).sort((a, b) => b.v - a.v);
     },
     get total() { return this.items.reduce((m, i) => m + i.v, 0); },
@@ -93,7 +120,7 @@ export default (Alpine: Alpine) => {
         h: `${(q.h * 100).toFixed(2)}%`,
         value: this.fmt(items[i].v),
         pct: `${Math.round(items[i].v / sum * 100)}%`,
-        size: q.w < 0.3 ? 'is-small' : (q.w > 0.35 && q.w * q.h > 0.25) ? 'is-large' : '',
+        size: (q.w < 0.1 || q.h < 0.12) ? 'is-tiny' : q.w < 0.3 ? 'is-small' : (q.w > 0.35 && q.w * q.h > 0.25) ? 'is-large' : '',
       }));
     },
 
@@ -111,6 +138,16 @@ export default (Alpine: Alpine) => {
     get downLabel() { return `${this.downPct}% · ${this.fmt(this.down)}`; },
     get rateLabel() { return `${this.rate.toFixed(2)}%`; },
     get taxLabel() { return `${this.taxPct.toFixed(2)}% · ${this.fmt(this.tax)}/mo`; },
+    get landTransferLabel() {
+      const parts = this.landTransferParts;
+      const total = parts.reduce((m: number, p: any) => m + p.v, 0);
+      return this.fmt(total);
+    },
+    get landTransferNote() {
+      const parts = this.landTransferParts;
+      if (parts.length < 2) return '';
+      return parts.map((p: any) => `${p.name} ${this.fmt(p.v)}`).join(' · ');
+    },
     get totalLabel() { return cfg.results.total.replace('{years}', this.years); },
     get taxNote() {
       const r = cfg.results;

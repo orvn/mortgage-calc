@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Calculator from '../components/Calculator.astro';
 import SegmentedControl from '../components/SegmentedControl.astro';
+import SelectControl from '../components/SelectControl.astro';
 import { loadGlobal, loadPage } from '../lib/content';
 import type { CalculatorContent } from '../lib/content';
 
@@ -10,6 +11,7 @@ const { meta, content } = loadPage<CalculatorContent>('home');
 const { settings } = content;
 
 const currencies = settings.currencies.map((code) => ({ value: code, label: code }));
+const regions = Object.entries(settings.regions).map(([key, r]) => ({ value: key, label: r.name }));
 
 const jsonLD = {
   '@context': 'https://schema.org',
@@ -27,7 +29,13 @@ const jsonLD = {
   ogImage={meta.og_image}
   jsonLD={jsonLD}
 >
-  <div slot="header-actions" x-data x-init={`$store.currency.code = ${JSON.stringify(settings.currency)}`}>
+  <div
+    slot="header-actions"
+    class="header-controls"
+    x-data
+    x-init={`$store.currency.code = ${JSON.stringify(settings.currency)}; $store.region.key = ${JSON.stringify(settings.defaults.region)}`}
+  >
+    <SelectControl options={regions} model="$store.region.key" label={content.labels.region} />
     <SegmentedControl options={currencies} model="$store.currency.code" label={content.labels.currency} />
   </div>
 
@@ -39,6 +47,12 @@ const jsonLD = {
 </BaseLayout>
 
 <style>
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
   .calc-page {
     padding-top: 1.75rem;
   }

@@ -40,6 +40,7 @@ bun preview    # preview the ./dist build locally
 │   │   ├── Calculator.astro        # Hero + figures panels, owns the mortgageCalc Alpine scope
 │   │   ├── RangeField.astro        # Labelled slider bound to an Alpine property
 │   │   ├── SegmentedControl.astro  # Radio button group (term, currency)
+│   │   ├── SelectControl.astro     # Native select (region)
 │   │   ├── Toggle.astro            # Switch (property tax on/off)
 │   │   ├── Treemap.astro           # Squarified cost breakdown
 │   │   ├── Rail.astro              # Vertical label column on a panel
@@ -57,7 +58,7 @@ bun preview    # preview the ./dist build locally
 │   ├── layouts/
 │   │   └── BaseLayout.astro  # Root HTML shell, accepts SEO + JSON-LD props
 │   │
-│   ├── entrypoint.ts     # Alpine registrations: mortgageCalc data component, currency store
+│   ├── entrypoint.ts     # Alpine registrations: mortgageCalc data component, currency and region stores
 │   │
 │   ├── lib/
 │   │   └── content.ts    # loadGlobal() and loadPage() helpers
